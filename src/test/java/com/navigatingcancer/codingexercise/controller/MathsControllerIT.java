@@ -60,4 +60,39 @@ public class MathsControllerIT {
         assertEquals(mathResult.getOperation(), MathOperation.ADDITION);
         assertEquals(7, mathResult.getResult(), "result doesn't match expected 7");
     }
+
+    @Test
+    void givenTwoAndTwo_shouldReturnZero(){
+        int param1 = 2;
+        int param2 = 2;
+        String url = String.format("/math/subtract?parameter1=%d&parameter2=%d", param1, param2);
+
+        ResponseEntity<BasicMathResult> result = testRestTemplate.getForEntity(url, BasicMathResult.class);
+
+        assertNotNull(result);
+        BasicMathResult mathResult = result.getBody();
+        assertNotNull(mathResult);
+        assertEquals(mathResult.getParameter1(), param1);
+        assertEquals(mathResult.getParameter2(), param2);
+        assertEquals(mathResult.getOperation(), MathOperation.SUBTRACTION);
+        assertEquals(0, mathResult.getResult(), "result doesn't match expected 0");
+    }
+
+
+    @Test
+    void givenTwoAndFive_shouldReturnNegativeThree(){
+        int param1 = 2;
+        int param2 = 5;
+        String url = String.format("/math/subtract?parameter1=%d&parameter2=%d", param1, param2);
+
+        ResponseEntity<BasicMathResult> result = testRestTemplate.getForEntity(url, BasicMathResult.class);
+
+        assertNotNull(result);
+        BasicMathResult mathResult = result.getBody();
+        assertNotNull(mathResult);
+        assertEquals(mathResult.getParameter1(), param1);
+        assertEquals(mathResult.getParameter2(), param2);
+        assertEquals(mathResult.getOperation(), MathOperation.SUBTRACTION);
+        assertEquals(-3, mathResult.getResult(), "result doesn't match expected -3");
+    }
 }

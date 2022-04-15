@@ -19,4 +19,10 @@ public class ExceptionAdvice {
     public ErrorMessage handleClientError(Exception ex) {
         return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), SERVER_ERROR, new Date());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler
+    public ErrorMessage handleClientError(ArithmeticException ex) {
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), "Integer Overflow", new Date());
+    }
 }
