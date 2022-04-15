@@ -67,6 +67,19 @@ public class MathsControllerTest {
     }
 
     @Test
+    void givenMaxIntegerAndOne_shouldThrowExceptionAndReturnBadRequest() throws Exception{
+        int param1 = Integer.MAX_VALUE;
+        int param2 = 1;
+
+        mockMvc.perform(get("/math/add")
+                        .param("parameter1", Integer.toString(param1))
+                        .param("parameter2", Integer.toString(param2))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.message").value("Integer Overflow"));
+    }
+
+    @Test
     void givenTwoAndTwo_shouldReturnZero() throws Exception{
         int param1 = 2;
         int param2 = 2;
@@ -99,5 +112,18 @@ public class MathsControllerTest {
                 .andExpect(jsonPath("$.parameter2").value(param2))
                 .andExpect(jsonPath("$.operation").value(MathOperation.SUBTRACTION.toString()))
                 .andExpect(jsonPath("$.result").value(-3));
+    }
+
+    @Test
+    void givenMInIntegerAndSubtractOne_shouldThrowExceptionAndReturnBadRequest() throws Exception{
+        int param1 = Integer.MIN_VALUE;
+        int param2 = 1;
+
+        mockMvc.perform(get("/math/subtract")
+                        .param("parameter1", Integer.toString(param1))
+                        .param("parameter2", Integer.toString(param2))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.message").value("Integer Overflow"));
     }
 }
