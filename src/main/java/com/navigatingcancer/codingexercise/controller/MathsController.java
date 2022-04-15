@@ -14,4 +14,10 @@ public class MathsController {
                                           @RequestParam int parameter2){
         return new BasicMathResult(parameter1, parameter2, MathOperation.ADDITION, parameter1 + parameter2);
     }
+
+    @GetMapping("/math/subtract")
+    public BasicMathResult subtractTwoIntegers(@RequestParam int parameter1,
+                                               @RequestParam int parameter2){
+        return new BasicMathResult(parameter1, parameter2, MathOperation.SUBTRACTION, parameter1 - parameter2);
+    }
 }

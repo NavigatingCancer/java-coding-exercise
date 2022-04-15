@@ -65,4 +65,39 @@ public class MathsControllerTest {
                 .andExpect(jsonPath("$.operation").value(MathOperation.ADDITION.toString()))
                 .andExpect(jsonPath("$.result").value(7));
     }
+
+    @Test
+    void givenTwoAndTwo_shouldReturnZero() throws Exception{
+        int param1 = 2;
+        int param2 = 2;
+
+        MvcResult result =  mockMvc.perform(get("/math/subtract")
+                        .param("parameter1", Integer.toString(param1))
+                        .param("parameter2", Integer.toString(param2))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.parameter1").value(param1))
+                .andExpect(jsonPath("$.parameter2").value(param2))
+                .andExpect(jsonPath("$.operation").value(MathOperation.SUBTRACTION.toString()))
+                .andExpect(jsonPath("$.result").value(0))
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    void givenTwoAndFive_shouldReturnNegativeThree() throws Exception{
+        int param1 = 2;
+        int param2 = 5;
+
+        mockMvc.perform(get("/math/subtract")
+                        .param("parameter1", Integer.toString(param1))
+                        .param("parameter2", Integer.toString(param2))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.parameter1").value(param1))
+                .andExpect(jsonPath("$.parameter2").value(param2))
+                .andExpect(jsonPath("$.operation").value(MathOperation.SUBTRACTION.toString()))
+                .andExpect(jsonPath("$.result").value(-3));
+    }
 }
